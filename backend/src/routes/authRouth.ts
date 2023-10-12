@@ -1,23 +1,27 @@
-import express from "express";
-import passport from "passport";
+import express from 'express';
+import passport from 'passport';
 const router = express.Router();
 
-router.get("/login", (req, res) => {
+router.get('/login', (req, res) => {
   if (req.user) {
-    res.redirect("/profile");
+    res.send('hello');
   }
-  res.render("login");
+  res.send('hi no user');
 });
 
 router.get(
-  "/google",
-  passport.authenticate("google", {
-    scope: ["email", "profile"],
+  '/google',
+  passport.authenticate('google', {
+    scope: ['email', 'profile'],
   })
 );
 
-router.get("/google/callback", passport.authenticate("google"), (req, res) => {
-  res.send("worked");
-});
+router.get(
+  '/google/callback',
+  passport.authenticate('google', {}),
+  (req, res) => {
+    res.redirect('http://localhost:5173');
+  }
+);
 
 export default router;

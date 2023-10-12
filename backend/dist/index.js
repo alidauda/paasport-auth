@@ -20,29 +20,34 @@ require("dotenv/config");
 const authRouth_1 = __importDefault(require("./routes/authRouth"));
 const passport_1 = __importDefault(require("passport"));
 require("./passport");
+const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
 const client = new ioredis_1.default(process.env.RedisURL);
 let redisStore = new connect_redis_1.default({
     client: client,
-    prefix: "myapp:",
+    prefix: 'myapp:',
 });
-app.set("trust proxy", 1);
+app.set('trust proxy', 1);
 app.use((0, express_session_1.default)({
     store: redisStore,
-    secret: "keyboard cat",
+    secret: 'keyboard cat',
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false, httpOnly: true },
 }));
 app.use(passport_1.default.initialize());
 app.use(passport_1.default.session());
-app.use("/auth", authRouth_1.default);
-app.get("/", function (req, res) {
+app.use((0, cors_1.default)({
+    origin: 'http://localhost:5173',
+}));
+app.get('/', function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        res.send(req.user);
+        console.log(req.user);
+        res.send({ user: req.user, me: '9e8a0eae-62d6-4d40-ab36-2e7c05f3ec8d' });
     });
 });
+app.use('/auth', authRouth_1.default);
 app.listen(4000, () => {
-    console.log("server started on localhost:4000");
+    console.log('server started on localhost:4000');
 });
 //# sourceMappingURL=index.js.map

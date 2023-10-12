@@ -19,8 +19,8 @@ require("dotenv/config");
 passport_1.default.use(new passport_google_oauth20_1.Strategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: "/auth/google/callback",
-    scope: ["profile", "email"],
+    callbackURL: '/auth/google/callback',
+    scope: ['profile', 'email'],
 }, function (accessToken, refreshToken, profile, done) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -41,7 +41,7 @@ passport_1.default.use(new passport_google_oauth20_1.Strategy({
                     done(null, newUser);
                 }
                 else {
-                    done(new Error("Failed to create new user."));
+                    done(new Error('Failed to create new user.'));
                 }
             }
             else {

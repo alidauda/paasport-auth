@@ -6,17 +6,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const passport_1 = __importDefault(require("passport"));
 const router = express_1.default.Router();
-router.get("/login", (req, res) => {
+router.get('/login', (req, res) => {
     if (req.user) {
-        res.redirect("/profile");
+        res.send('hello');
     }
-    res.render("login");
+    res.send('hi no user');
 });
-router.get("/google", passport_1.default.authenticate("google", {
-    scope: ["email", "profile"],
+router.get('/google', passport_1.default.authenticate('google', {
+    scope: ['email', 'profile'],
 }));
-router.get("/google/callback", passport_1.default.authenticate("google"), (req, res) => {
-    res.send("worked");
+router.get('/google/callback', passport_1.default.authenticate('google', {}), (req, res) => {
+    res.redirect('http://localhost:5173');
 });
 exports.default = router;
 //# sourceMappingURL=authRouth.js.map

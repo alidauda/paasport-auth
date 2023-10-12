@@ -1,9 +1,10 @@
-import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import passport from "passport";
-import { db } from "./utils/db";
-import "dotenv/config";
-import { User as UserDocument } from "@prisma/client";
-type UserWithoutPassword = Omit<UserDocument, "password">;
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import passport from 'passport';
+import { db } from './utils/db';
+import 'dotenv/config';
+import { User as UserDocument } from '@prisma/client';
+
+type UserWithoutPassword = Omit<UserDocument, 'password'>;
 declare global {
   namespace Express {
     interface User extends UserWithoutPassword {}
@@ -15,8 +16,8 @@ passport.use(
     {
       clientID: process.env.CLIENT_ID!,
       clientSecret: process.env.CLIENT_SECRET!,
-      callbackURL: "/auth/google/callback",
-      scope: ["profile", "email"],
+      callbackURL: '/auth/google/callback',
+      scope: ['profile', 'email'],
     },
 
     async function (accessToken, refreshToken, profile, done) {
@@ -39,7 +40,7 @@ passport.use(
           if (newUser) {
             done(null, newUser);
           } else {
-            done(new Error("Failed to create new user."));
+            done(new Error('Failed to create new user.'));
           }
         } else {
           done(null, user);
